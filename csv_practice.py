@@ -53,7 +53,6 @@ with open(SALES_FILE, "r") as f:
         quantity = int(qty_str)
         total = price * quantity
         if total > 100:
-            print(f"{product}: {quantity} units x ${price} = ${total:.2f}")
             high_value.append([product, f"{price:.2f}", quantity, f"{total:.2f}"])
 
 with open (CLEANED_FILE, "w", newline="") as f:
@@ -77,4 +76,15 @@ with open(SALES_FILE, 'r') as f:
         print(f"{row['product']}: {quantity} units x ${price} = ${total:.2f}")
 print(f"Total sales: ${dict_total:.2f}")
 
+print("-----Exercise 7-----")
 
+summary=   {}
+with open(SALES_FILE, 'r') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        product = row['product']
+        total = float(row['price']) * int(row['quantity'])
+        summary[product]=summary.get(product, 0) + total
+
+for product in sorted(summary):
+    print(f"{product}: ${summary[product]:.2f}")
